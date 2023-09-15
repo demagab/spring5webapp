@@ -1,0 +1,28 @@
+package guru.springframework.spring5webapp.bootstrap;
+
+import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.repository.BookRepository;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+public class DataInitializer implements CommandLineRunner {
+    private final BookRepository bookRepository;
+
+    public DataInitializer(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    @Override
+    public void run(String... args) throws Exception {
+        Book bookDDD = new Book("Domain Driven Design", "123", "RandomPeople");
+        System.out.println("Saving with ID: " + bookRepository.save(bookDDD).getId());
+
+        Book bookSIA = new Book("SIA", "456", "Nobody");
+        System.out.println("Saving with ID: " + bookRepository.save(bookSIA).getId());
+
+        bookRepository.findAll().forEach(book -> {
+            System.out.println("ID " + book.getId()+" Title: "+book.getTitle());
+        });
+    }
+}
