@@ -3,8 +3,10 @@ package guru.springframework.spring5webapp.bootstrap;
 import guru.springframework.spring5webapp.domain.Book;
 import guru.springframework.spring5webapp.repository.BookRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+@Profile({"local", "default"})
 @Component
 public class DataInitializer implements CommandLineRunner {
     private final BookRepository bookRepository;
