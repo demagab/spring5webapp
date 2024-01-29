@@ -55,4 +55,14 @@ public class AuthorDaoIntegrationTest {
 
         assertThat(updated).isNotNull();
     }
+
+    @Test
+    public void testDeleteAuthor() {
+        Author author = new Author("author", "TO DELETE");
+        Author saved = authorDao.saveNewAuthor(author);
+
+        authorDao.deleteById(saved.getId());
+
+        assertThat(authorDao.getById(saved.getId())).isNull();
+    }
 }
