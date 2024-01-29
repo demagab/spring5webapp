@@ -11,4 +11,5 @@
     <include file="db/changelog/init-hibernate.xml"/>
     <include file="db/changelog/author-table.xml"/>
     <include file="db/changelog/add-author-to-book.xml"/>
+    <include file="db/changelog/v4-autoincrement-pk.xml"/>
 </databaseChangeLog>
