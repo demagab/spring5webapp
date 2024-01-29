@@ -13,6 +13,14 @@ public class Author {
     private String firstName;
     private String lastname;
 
+    public Author() {
+    }
+
+    public Author(String firstName, String lastname) {
+        this.firstName = firstName;
+        this.lastname = lastname;
+    }
+
     public Long getId() {
         return id;
     }

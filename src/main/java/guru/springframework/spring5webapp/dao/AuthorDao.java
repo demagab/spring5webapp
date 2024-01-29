@@ -7,4 +7,6 @@ public interface AuthorDao {
     Author getById(Long id);
 
     Author getByName(String firstName, String lastname);
+
+    Author saveNewAuthor(Author author);
 }

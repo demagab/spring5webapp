@@ -3,17 +3,19 @@ package guru.springframework.spring5webapp;
 import guru.springframework.spring5webapp.dao.AuthorDao;
 import guru.springframework.spring5webapp.domain.Author;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-
+@SpringBootTest
+@RunWith(SpringRunner.class)
 @ActiveProfiles("local")
-@DataJpaTest
 @ComponentScan(basePackages = {"guru.springframework.spring5webapp.dao"})
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class AuthorDaoIntegrationTest {
@@ -33,5 +35,13 @@ public class AuthorDaoIntegrationTest {
         Author author = authorDao.getByName("john", "doe");
 
         assertThat(author).isNotNull();
+    }
+
+    @Test
+    public void testSaveAuthor() {
+        Author author = new Author("john", "doe");
+        Author saved = authorDao.saveNewAuthor(author);
+
+        assertThat(saved).isNotNull();
     }
 }
