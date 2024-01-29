@@ -23,7 +23,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
         try {
             connection = source.getConnection();
-            statement = connection.prepareStatement("SELECT * FROM author WHERE id = ?");
+            statement = connection.prepareStatement("SELECT * FROM author WHERE id = ? LIMIT 1");
             statement.setLong(1, id);
             resultSet = statement.executeQuery();
 
@@ -51,6 +51,47 @@ public class AuthorDaoImpl implements AuthorDao {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+        }
+        return null;
+    }
+
+    @Override
+    public Author getByName(String firstName, String lastname) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = source.getConnection();
+            statement = connection.prepareStatement("SELECT * FROM author WHERE first_name LIKE ? AND lastname LIKE ? LIMIT 1");
+            statement.setString(1, firstName);
+            statement.setString(2, lastname);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                Author author = new Author();
+                author.setId(resultSet.getLong("id"));
+                author.setFirstName(resultSet.getString("first_name"));
+                author.setLastname(resultSet.getString("last_name"));
+
+                return author;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet !=null) {
+                    resultSet.close();
+                }
+                if (statement !=null) {
+                    statement.close();
+                }
+                if (connection !=null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
