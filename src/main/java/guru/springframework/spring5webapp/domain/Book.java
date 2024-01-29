@@ -74,4 +74,12 @@ public class Book {
     public Long getId() {
         return id;
     }
+
+    public Long getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
 }
