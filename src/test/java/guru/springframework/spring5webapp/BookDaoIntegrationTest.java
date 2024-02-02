@@ -1,6 +1,7 @@
 package guru.springframework.spring5webapp;
 
 import guru.springframework.spring5webapp.dao.BookDao;
+import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,7 +48,7 @@ public class BookDaoIntegrationTest {
 
     @Test
     public void testUpdate() {
-        Book book = new Book("t-edit", "000", "publisher", 1L);
+        Book book = new Book("t-edit", "000", "publisher", new Author("Author", "Test"));
         Book saved = bookDao.saveNew(book);
 
         saved.setTitle("test-edited");
