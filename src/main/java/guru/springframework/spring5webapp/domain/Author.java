@@ -3,6 +3,7 @@ package guru.springframework.spring5webapp.domain;
 import javax.persistence.*;
 import java.util.List;
 
+@NamedQuery(name = "author_find_all", query = "FROM Author")
 @Entity
 public class Author {
     @Id

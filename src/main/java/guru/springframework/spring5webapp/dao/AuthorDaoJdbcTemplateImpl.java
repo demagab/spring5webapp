@@ -19,6 +19,11 @@ public class AuthorDaoJdbcTemplateImpl implements AuthorDao {
     }
 
     @Override
+    public List<Author> findAll() {
+        return null;
+    }
+
+    @Override
     public List<Author> listAuthorByLastNameLike(String lastName) {
         return null;
     }
