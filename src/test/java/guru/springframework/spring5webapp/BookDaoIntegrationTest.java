@@ -25,6 +25,14 @@ public class BookDaoIntegrationTest {
     BookDao bookDao;
 
     @Test
+    public void findByIsbn() {
+        Book book = bookDao.findByIsbn("123");
+
+        assertThat(book).isNotNull();
+        assertThat(book.getIsbn()).isEqualTo("123");
+    }
+
+    @Test
     public void testGet() {
         Book book = bookDao.getById(1L);
 

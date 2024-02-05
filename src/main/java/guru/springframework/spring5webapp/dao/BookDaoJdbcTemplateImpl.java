@@ -6,6 +6,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class BookDaoJdbcTemplateImpl implements BookDao {
     private final JdbcTemplate jdbcTemplate;
@@ -14,6 +16,11 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     public BookDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate, AuthorDao authorDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.authorDao = authorDao;
+    }
+
+    @Override
+    public Book findByIsbn(String isbn) {
+        return null;
     }
 
     @Override

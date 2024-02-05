@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Component
 @Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
@@ -18,6 +20,22 @@ public class BookDaoHibernateImpl implements BookDao {
 
     public BookDaoHibernateImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+
+    @Override
+    public Book findByIsbn(String isbn) {
+        EntityManager entityManager = this.getEntityManager();
+        try {
+            TypedQuery<Book> query = entityManager.createQuery("SELECT b FROM Book b WHERE b.isbn = :isbn", Book.class);
+            query.setMaxResults(1);
+            query.setParameter("isbn", isbn);
+
+            return query.getSingleResult();
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        } finally {
+            entityManager.close(); //Close transaction
+        }
     }
 
     @Override
