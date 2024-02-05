@@ -1,7 +1,6 @@
 package guru.springframework.spring5webapp.dao;
 
 import guru.springframework.spring5webapp.domain.Book;
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
@@ -16,6 +15,11 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     public BookDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate, AuthorDao authorDao) {
         this.jdbcTemplate = jdbcTemplate;
         this.authorDao = authorDao;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        return null;
     }
 
     @Override

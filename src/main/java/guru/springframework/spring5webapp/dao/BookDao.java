@@ -5,6 +5,8 @@ import guru.springframework.spring5webapp.domain.Book;
 import java.util.List;
 
 public interface BookDao {
+    List<Book> findAll();
+
     Book findByIsbn (String isbn);
 
     Book getById(Long id);

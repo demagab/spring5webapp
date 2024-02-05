@@ -36,7 +36,8 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
         EntityManager entityManager = this.getEntityManager();
 
         try{
-            TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a WHERE a.lastname like :lastname", Author.class);
+            //SAME as: TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a WHERE a.lastname like :lastname", Author.class);
+            TypedQuery<Author> query = entityManager.createNamedQuery("author_find_by_last_name", Author.class);
             query.setParameter("lastname", "%"+lastName+"%");
 
             return query.getResultList();

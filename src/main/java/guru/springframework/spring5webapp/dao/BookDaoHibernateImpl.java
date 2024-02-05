@@ -1,15 +1,12 @@
 package guru.springframework.spring5webapp.dao;
 
-import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -20,6 +17,19 @@ public class BookDaoHibernateImpl implements BookDao {
 
     public BookDaoHibernateImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+
+    @Override
+    public List<Book> findAll() {
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            TypedQuery<Book> query = entityManager.createNamedQuery("book_find_all", Book.class);
+
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
@@ -54,7 +64,7 @@ public class BookDaoHibernateImpl implements BookDao {
     public Book getByTitle(String title) {
         EntityManager em = this.getEntityManager();
 
-        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book b WHERE b.title = :title", Book.class);
+        TypedQuery<Book> query = em.createNamedQuery("book_find_by_title", Book.class);
         query.setMaxResults(1);
         query.setParameter("title", title);
         Book book = query.getSingleResult();

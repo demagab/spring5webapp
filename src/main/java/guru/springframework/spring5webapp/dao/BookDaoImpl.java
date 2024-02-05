@@ -19,6 +19,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findAll() {
+        return null;
+    }
+
+    @Override
     public Book findByIsbn(String isbn) {
         return null;
     }

@@ -12,6 +12,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -23,6 +25,14 @@ public class BookDaoIntegrationTest {
 
     @Autowired
     BookDao bookDao;
+
+    @Test
+    public void testFindAll() {
+        List<Book> books = bookDao.findAll();
+
+        assertThat(books).isNotNull();
+        assertThat(books.size()).isGreaterThan(0);
+    }
 
     @Test
     public void findByIsbn() {

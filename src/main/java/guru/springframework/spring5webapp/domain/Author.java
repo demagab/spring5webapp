@@ -3,7 +3,10 @@ package guru.springframework.spring5webapp.domain;
 import javax.persistence.*;
 import java.util.List;
 
-@NamedQuery(name = "author_find_all", query = "FROM Author")
+@NamedQueries({
+        @NamedQuery(name = "author_find_all", query = "FROM Author"),
+        @NamedQuery(name = "author_find_by_last_name", query = "FROM Author a WHERE a.lastname like :lastname")
+})
 @Entity
 public class Author {
     @Id
