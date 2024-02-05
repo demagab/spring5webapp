@@ -1,9 +1,7 @@
 package guru.springframework.spring5webapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Author {
@@ -12,6 +10,9 @@ public class Author {
     private Long id;
     private String firstName;
     private String lastname;
+
+    @Transient
+    private List<Book> books;
 
     public Author() {
     }
@@ -58,5 +59,13 @@ public class Author {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }

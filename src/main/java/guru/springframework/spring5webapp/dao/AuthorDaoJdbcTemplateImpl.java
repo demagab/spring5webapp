@@ -3,6 +3,7 @@ package guru.springframework.spring5webapp.dao;
 import guru.springframework.spring5webapp.domain.Author;
 import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,10 @@ public class AuthorDaoJdbcTemplateImpl implements AuthorDao {
     @Override
     public Author getById(Long id) {
         try {
-            return this.jdbcTemplate.queryForObject("SELECT * FROM author WHERE id = ?", this.getRowMapper(), id);
-        } catch (EmptyResultDataAccessException e) {
+            // return this.jdbcTemplate.queryForObject("SELECT * FROM author WHERE id = ?", this.getRowMapper(), id); // This would only give an object
+            String sql = "SELECT * FROM author LEFT JOIN book ON author.id = book.author_id WHERE author.id = ?";
+            return jdbcTemplate.query(sql, new AuthorExtractor(), id);
+        } catch (TransientDataAccessResourceException e) {
             return null;
         }
     }
