@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
 public class AuthorDaoJdbcTemplateImpl implements AuthorDao {
     private final JdbcTemplate jdbcTemplate;
 

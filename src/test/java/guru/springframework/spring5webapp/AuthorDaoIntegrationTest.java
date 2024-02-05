@@ -42,7 +42,7 @@ public class AuthorDaoIntegrationTest {
         Author author = new Author("john", "doe");
         Author saved = authorDao.saveNewAuthor(author);
 
-        assertThat(saved).isNotNull();
+        assertThat(saved.getId()).isNotNull();
     }
 
     @Test
@@ -54,6 +54,7 @@ public class AuthorDaoIntegrationTest {
         Author updated = authorDao.updateAuthor(saved);
 
         assertThat(updated).isNotNull();
+        assertThat(updated.getLastname()).isEqualTo("doe upd");
     }
 
     @Test

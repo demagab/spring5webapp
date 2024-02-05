@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-@Primary
 public class BookDaoJdbcTemplateImpl implements BookDao {
     private final JdbcTemplate jdbcTemplate;
     private final AuthorDao authorDao;
