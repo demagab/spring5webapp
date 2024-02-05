@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Component
 @Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
@@ -15,6 +16,20 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
 
     public AuthorDaoHibernateImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastName) {
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            TypedQuery<Author> query = entityManager.createQuery("SELECT a FROM Author a WHERE a.lastname like :lastname", Author.class);
+            query.setParameter("lastname", "%"+lastName+"%");
+
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

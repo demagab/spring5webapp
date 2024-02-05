@@ -8,12 +8,19 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class AuthorDaoJdbcTemplateImpl implements AuthorDao {
     private final JdbcTemplate jdbcTemplate;
 
     public AuthorDaoJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public List<Author> listAuthorByLastNameLike(String lastName) {
+        return null;
     }
 
     @Override
