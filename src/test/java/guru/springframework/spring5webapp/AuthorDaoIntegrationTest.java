@@ -56,6 +56,13 @@ public class AuthorDaoIntegrationTest {
     }
 
     @Test
+    public void testFindAuthorByNameCriteria() {
+        Author author = authorDao.findAuthorByNameCriteria("john", "doe");
+
+        assertThat(author).isNotNull();
+    }
+
+    @Test
     public void testSaveAuthor() {
         Author author = new Author("john", "doe");
         Author saved = authorDao.saveNewAuthor(author);

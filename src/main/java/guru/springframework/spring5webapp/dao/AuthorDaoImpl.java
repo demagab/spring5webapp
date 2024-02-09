@@ -82,6 +82,11 @@ public class AuthorDaoImpl implements AuthorDao {
     }
 
     @Override
+    public Author findAuthorByNameCriteria(String firstName, String lastName) {
+        return null;
+    }
+
+    @Override
     public Author saveNewAuthor(Author author) {
         Connection connection = null;
         PreparedStatement statement = null;

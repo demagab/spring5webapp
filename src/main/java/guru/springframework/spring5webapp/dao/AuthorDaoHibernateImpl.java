@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Component
@@ -68,6 +69,35 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
 
         entityManager.close(); //Close transaction
         return author;
+    }
+
+    @Override
+    public Author findAuthorByNameCriteria(String firstName, String lastName) {
+        // implementation with Criteria Query
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Author> criteriaQuery = criteriaBuilder.createQuery(Author.class);
+
+            Root<Author> root = criteriaQuery.from(Author.class);
+
+            ParameterExpression<String> firstNameParameter = criteriaBuilder.parameter(String.class);
+            ParameterExpression<String> lastNameParameter = criteriaBuilder.parameter(String.class);
+
+            Predicate firstNamePredicate = criteriaBuilder.equal(root.get("firstName"), firstNameParameter);
+            Predicate lastNamePredicate = criteriaBuilder.equal(root.get("lastname"), lastNameParameter);
+
+            criteriaQuery.select(root).where(criteriaBuilder.and(firstNamePredicate, lastNamePredicate));
+
+            TypedQuery<Author> typedQuery = entityManager.createQuery(criteriaQuery).setMaxResults(1); //LIMIT 1
+            typedQuery.setParameter(firstNameParameter, firstName);
+            typedQuery.setParameter(lastNameParameter, lastName);
+
+            return typedQuery.getSingleResult();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

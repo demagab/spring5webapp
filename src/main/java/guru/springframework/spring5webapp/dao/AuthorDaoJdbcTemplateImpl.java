@@ -45,6 +45,11 @@ public class AuthorDaoJdbcTemplateImpl implements AuthorDao {
     }
 
     @Override
+    public Author findAuthorByNameCriteria(String firstName, String lastName) {
+        return null;
+    }
+
+    @Override
     public Author saveNewAuthor(Author author) {
         this.jdbcTemplate.update("INSERT INTO author(first_name, lastname) VALUES (?, ?)", author.getFirstName(), author.getLastname());
 

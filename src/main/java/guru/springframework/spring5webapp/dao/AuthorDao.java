@@ -12,6 +12,8 @@ public interface AuthorDao {
     Author getById(Long id);
 
     Author getByName(String firstName, String lastname);
+    
+    Author findAuthorByNameCriteria(String firstName, String lastName);
 
     Author saveNewAuthor(Author author);
 
