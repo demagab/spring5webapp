@@ -84,6 +84,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public Book findBookByTitleCriteria(String title) {
+        return null;
+    }
+
+    @Override
     public Book saveNew(Book book) {
         Connection connection = null;
         PreparedStatement statement = null;

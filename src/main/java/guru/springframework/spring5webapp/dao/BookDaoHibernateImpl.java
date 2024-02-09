@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 @Component
@@ -71,6 +72,32 @@ public class BookDaoHibernateImpl implements BookDao {
 
         em.close(); //Close transaction
         return book;
+    }
+
+    @Override
+    public Book findBookByTitleCriteria(String title) {
+        // implementation with Criteria Query
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<Book> criteriaQuery = criteriaBuilder.createQuery(Book.class);
+
+            Root<Book> root = criteriaQuery.from(Book.class);
+
+            ParameterExpression<String> titleParameter = criteriaBuilder.parameter(String.class);
+
+            Predicate titlePredicate = criteriaBuilder.equal(root.get("title"), titleParameter);
+
+            criteriaQuery.select(root).where(criteriaBuilder.and(titlePredicate));
+
+            TypedQuery<Book> typedQuery = entityManager.createQuery(criteriaQuery).setMaxResults(1); //LIMIT 1
+            typedQuery.setParameter(titleParameter, title);
+
+            return typedQuery.getSingleResult();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

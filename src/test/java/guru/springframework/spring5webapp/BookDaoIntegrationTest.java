@@ -57,6 +57,13 @@ public class BookDaoIntegrationTest {
     }
 
     @Test
+    public void testFindBookByTitleCriteria() {
+        Book book = bookDao.findBookByTitleCriteria("test");
+
+        assertThat(book).isNotNull();
+    }
+
+    @Test
     public void testSave() {
         Book book = new Book("test", "000", "publisher", null);
         Book saved = bookDao.saveNew(book);
