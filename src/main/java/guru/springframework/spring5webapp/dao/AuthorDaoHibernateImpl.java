@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
@@ -95,6 +96,23 @@ public class AuthorDaoHibernateImpl implements AuthorDao {
             typedQuery.setParameter(lastNameParameter, lastName);
 
             return typedQuery.getSingleResult();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public Author findAuthorByNameSqlNative(String firstName, String lastName) {
+        // implementation with SQL native
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            Query query = entityManager.createNativeQuery("SELECT * FROM author a WHERE a.first_name = :fn AND a.lastname = :lastName LIMIT 1", Author.class);
+            query.setParameter("fn", firstName); //Can used named biding :fn or positional biding ? but can't mix them in a query
+            query.setParameter("lastName", lastName);
+
+
+            return (Author) query.getSingleResult();
         } finally {
             entityManager.close();
         }

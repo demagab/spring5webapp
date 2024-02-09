@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.List;
@@ -95,6 +96,21 @@ public class BookDaoHibernateImpl implements BookDao {
             typedQuery.setParameter(titleParameter, title);
 
             return typedQuery.getSingleResult();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    @Override
+    public Book findBookByTitleSqlNative(String title) {
+        // implementation with SQL native
+        EntityManager entityManager = this.getEntityManager();
+
+        try{
+            Query query = entityManager.createNativeQuery("SELECT * FROM book WHERE title = :title LIMIT 1", Book.class);
+            query.setParameter("title", title); //Can used named biding :fn or positional biding ? but can't mix them in a query
+
+            return (Book) query.getSingleResult();
         } finally {
             entityManager.close();
         }

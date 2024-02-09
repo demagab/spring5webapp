@@ -63,6 +63,13 @@ public class AuthorDaoIntegrationTest {
     }
 
     @Test
+    public void testFindAuthorByNameSqlNative() {
+        Author author = authorDao.findAuthorByNameSqlNative("john", "doe");
+
+        assertThat(author).isNotNull();
+    }
+
+    @Test
     public void testSaveAuthor() {
         Author author = new Author("john", "doe");
         Author saved = authorDao.saveNewAuthor(author);

@@ -47,6 +47,11 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     @Override
+    public Book findBookByTitleSqlNative(String title) {
+        return null;
+    }
+
+    @Override
     public Book saveNew(Book book) {
         this.jdbcTemplate.update("INSERT INTO book (isbn, publisher, title, author_id) VALUES (?, ?, ?, ?)", book.getIsbn(), book.getPublisher(), book.getTitle(), book.getAuthor() != null ? book.getAuthor().getId() : null);
 
