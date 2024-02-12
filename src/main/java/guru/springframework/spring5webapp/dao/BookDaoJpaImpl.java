@@ -50,7 +50,7 @@ public class BookDaoJpaImpl implements BookDao {
 
     @Override
     public Book findBookByTitleSqlNative(String title) {
-        return null;
+        return this.bookRepository.findBookByTitleWithQuery(title).get(0);
     }
 
     @Override

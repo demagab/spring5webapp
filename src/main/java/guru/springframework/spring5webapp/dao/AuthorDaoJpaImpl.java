@@ -49,7 +49,7 @@ public class AuthorDaoJpaImpl implements AuthorDao {
 
     @Override
     public Author findAuthorByNameSqlNative(String firstName, String lastName) {
-        return null;
+        return this.authorRepository.findAuthorByFirstNameAndLastnameWithQuery(firstName, lastName).get(0);
     }
 
     @Override
