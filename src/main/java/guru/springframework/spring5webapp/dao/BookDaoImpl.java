@@ -4,6 +4,7 @@ import guru.springframework.spring5webapp.domain.Book;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import org.springframework.data.domain.Pageable;
 import java.sql.*;
 import java.util.List;
 
@@ -16,6 +17,11 @@ public class BookDaoImpl implements BookDao {
     public BookDaoImpl(DataSource source, AuthorDao authorDao) {
         this.source = source;
         this.authorDao = authorDao;
+    }
+
+    @Override
+    public List<Book> findAll(Pageable pageable) {
+        return null;
     }
 
     @Override

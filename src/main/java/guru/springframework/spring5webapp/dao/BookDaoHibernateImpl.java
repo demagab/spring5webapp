@@ -10,6 +10,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Component
@@ -18,6 +19,11 @@ public class BookDaoHibernateImpl implements BookDao {
 
     public BookDaoHibernateImpl(EntityManagerFactory entityManagerFactory) {
         this.entityManagerFactory = entityManagerFactory;
+    }
+
+    @Override
+    public List<Book> findAll(Pageable pageable) {
+        return null;
     }
 
     @Override

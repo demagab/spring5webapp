@@ -12,15 +12,20 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Component
-@Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
 public class BookDaoJpaImpl implements BookDao {
     private final BookRepository bookRepository;
 
     public BookDaoJpaImpl(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
+    }
+
+    @Override
+    public List<Book> findAll(Pageable pageable) {
+        return null;
     }
 
     @Override

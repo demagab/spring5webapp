@@ -1,13 +1,16 @@
 package guru.springframework.spring5webapp.dao;
 
 import guru.springframework.spring5webapp.domain.Book;
+import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Component
+@Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
 public class BookDaoJdbcTemplateImpl implements BookDao {
     private final JdbcTemplate jdbcTemplate;
     private final AuthorDao authorDao;
@@ -18,8 +21,13 @@ public class BookDaoJdbcTemplateImpl implements BookDao {
     }
 
     @Override
+    public List<Book> findAll(Pageable pageable) {
+        return this.jdbcTemplate.query("SELECT * FROM book LIMIT ? OFFSET ?", new BookMapper(), pageable.getPageSize(), pageable.getOffset());
+    }
+
+    @Override
     public List<Book> findAll() {
-        return null;
+        return this.jdbcTemplate.query("SELECT * FROM book", new BookMapper());
     }
 
     @Override
