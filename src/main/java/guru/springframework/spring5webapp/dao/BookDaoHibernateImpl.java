@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 @Component
+@Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
 public class BookDaoHibernateImpl implements BookDao {
     private final EntityManagerFactory entityManagerFactory;
 
@@ -23,7 +24,15 @@ public class BookDaoHibernateImpl implements BookDao {
 
     @Override
     public List<Book> findAll(Pageable pageable) {
-        return null;
+        EntityManager entityManager = this.getEntityManager();
+        try{
+            TypedQuery<Book> query = entityManager.createQuery("SELECT b FROM Book b", Book.class);
+            query.setFirstResult(Math.toIntExact(pageable.getOffset())); //converts long to int
+            query.setMaxResults(pageable.getPageSize());
+            return query.getResultList();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
