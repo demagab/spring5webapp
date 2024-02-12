@@ -13,7 +13,6 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Component
-@Primary //This annotation chooses this bean by default since we now have two implementations of the same interface
 public class BookDaoHibernateImpl implements BookDao {
     private final EntityManagerFactory entityManagerFactory;
 
